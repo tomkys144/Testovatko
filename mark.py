@@ -164,6 +164,7 @@ def correct_multichoice(page, corners, answers, points):
             rowidx = 0
             if len(selected) < colidx:
                 selected.append('')
+                dots.append([])
             continue
 
         lasty = y
@@ -173,8 +174,8 @@ def correct_multichoice(page, corners, answers, points):
 
         cnts, _ = cv2.findContours(cell, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
         total_perimeter = 0
-        for c in cnts:
-            perimeter = cv2.arcLength(c, True)
+        for d in cnts:
+            perimeter = cv2.arcLength(d, True)
             total_perimeter += perimeter
 
         if (total_perimeter > 1.5 * cell.shape[0]) and (total_perimeter < cell.shape[1] * 6):
@@ -400,7 +401,7 @@ def mark(pdf_path, student_path, quiz_path, answer_path):
     json.dump(student_results, open("res/marked_students.json", "w"))
 
 if __name__ == "__main__":
-    pdf_path = "./quiz-filled.pdf"
+    pdf_path = "./tmp-honza.novak-annotated.pdf"
     student_path = "students.json"
     quiz_path = "quiz.json"
     answer_path = "quiz_ans.json"
