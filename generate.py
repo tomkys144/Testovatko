@@ -55,7 +55,7 @@ def make_answer_grid(section, section_number):
     tbl = "#table(\n"
     tbl += f"columns: (2.5em, {', '.join(['2.5em' for _ in range(num_questions)])}),\n"
     tbl += f"rows: 2.5em,\n"
-    tbl += f'table.cell()[], {', '.join([f'text(weight: "bold", size: 1.8em)[{section_number}.{j}]' for j in range(num_questions)])},\n'
+    tbl += f'table.cell()[], {', '.join([f'text(weight: "bold", size: 1.8em)[{section_number}.{j + 1}]' for j in range(num_questions)])},\n'
     for i in range(num_answers):
         tbl += f'text(weight: "bold", size: 1.8em)[{string.ascii_uppercase[i]}], {', '.join(['table.cell()[]' for _ in range(num_questions)])},\n'
     tbl += ")"
@@ -167,7 +167,8 @@ def generate(quiz_path: str, student_path: str, output_path: str, answers_path: 
         os.remove(f)
 
     for f in glob.glob("tmp*.pdf"):
-        os.remove(f)
+        break
+        # os.remove(f)
 
     json.dump(answers, open(answers_path, 'w+'))
 
