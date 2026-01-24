@@ -1,4 +1,24 @@
-#import "@preview/cades:0.3.1": qr-code
+#import "@preview/tiaoma:0.3.0"
+
+#let exam_setup(student_name, student_username, body) = {
+  set page(
+    margin: (top: 3cm),
+    header: context {
+      if counter(page).get().first() > 1 {
+        block(stroke: (bottom: 2pt), width: 100%, inset: (bottom: 5pt))[
+          #grid(
+            columns: (1fr, auto, 1fr),
+            align: (left, center, right),
+            text(weight: "bold", size: 12pt)[#student_name],
+            block()[],
+            block(height: 2em)[#tiaoma.pdf417(student_username)],
+          )
+        ]
+      }
+    }
+  )
+  body
+}
 
 #let assignment_header(title, group, clazz, date, student_name, student_username) = {
   // Top Grid: Left side (Info), Right side (Student + QR)
@@ -14,10 +34,10 @@
       #text(weight: "bold")[Datum:] #date \
       #text(weight: "bold")[Podpis:]
     ],
-    align(center, block(stroke: none, inset: 8pt, radius: 4pt, [
+    align(top + right, block(height: 2em)[
       // Generate QR code encoding the student name
-      #qr-code(student_username, width: 2.5cm)
-    ])),
+      #tiaoma.pdf417(student_username)
+    ]),
   )
   line(length: 100%, stroke: 1pt)
   v(1cm)
@@ -83,12 +103,24 @@
   ))
 }
 
-#let finish_exam() = {
+#let finish_exam(student_name, student_username) = {
   // If we are on an odd page, add one empty page to make the total even
   context {
     if calc.odd(counter(page).get().first()) {
       pagebreak()
       // Optional: Add text to indicate it's intentionally blank
+      set page(
+        margin: (top: 3cm),
+        header: block(stroke: (bottom: 2pt), width: 100%, inset: (bottom: 5pt))[
+          #grid(
+            columns: (1fr, auto, 1fr),
+            align: (left, center, right),
+            text(weight: "bold", size: 12pt)[#student_name],
+            block()[],
+            block(height: 2em)[#tiaoma.pdf417(student_username)],
+          )
+        ]
+      )
       align(center + top)[_Prostor na poznámky._]
     }
   }

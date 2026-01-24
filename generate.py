@@ -55,9 +55,9 @@ def make_answer_grid(section, section_number):
     tbl = "#table(\n"
     tbl += f"columns: (2.5em, {', '.join(['2.5em' for _ in range(num_questions)])}),\n"
     tbl += f"rows: 2.5em,\n"
-    tbl += f'table.cell()[], {', '.join([f'text(weight: "bold")[{section_number}.{j}]' for j in range(num_questions)])},\n'
+    tbl += f'table.cell()[], {', '.join([f'text(weight: "bold", size: 1.8em)[{section_number}.{j}]' for j in range(num_questions)])},\n'
     for i in range(num_answers):
-        tbl += f'text(weight: "bold")[{string.ascii_uppercase[i]}], {', '.join(['table.cell()[]' for _ in range(num_questions)])},\n'
+        tbl += f'text(weight: "bold", size: 1.8em)[{string.ascii_uppercase[i]}], {', '.join(['table.cell()[]' for _ in range(num_questions)])},\n'
     tbl += ")"
     return f'#add_markers_around_table(start_id: {4})[\n{tbl}\n]\n'
 
@@ -126,6 +126,7 @@ def make_quiz(quiz: dict, output_path: str, student: dict, typst_path:str= ""):
     with open(typst_path, '+w') as f:
         f.write('#import "template.typ":*\n\n')
         f.write('#set heading(numbering: "1.1.")\n\n')
+        f.write(f'#show: doc => exam_setup("{student["name"]}", "{student['username']}", doc)\n\n')
         f.write(make_header(quiz, student))
         f.write(make_points_summary(quiz, start_marker_id=0))
 
@@ -135,7 +136,7 @@ def make_quiz(quiz: dict, output_path: str, student: dict, typst_path:str= ""):
 
             answers[section_number] = ans
 
-        f.write("\n#finish_exam()\n")
+        f.write(f'\n#finish_exam("{student["name"]}", "{student['username']}")\n')
 
         f.close()
 
