@@ -6,6 +6,7 @@ import easyocr
 import numpy as np
 from pdf2image import convert_from_path
 import zxingcpp
+import collections
 
 from PIL import Image
 
@@ -334,18 +335,11 @@ def mark(pdf_path, student_path, quiz_path, answer_path):
 
     images = convert_from_path(pdf_path)
 
-    student_results = {}
-    test_pages = []
-    results_corners = []
-    choice_corners = []
-    student_id = ""
-    choice_page = []
-    ans = {}
 
     print(f"Processing {len(images)} images")
-    test_page_num = 0
+    tests = collections.defaultdict(dict)
 
-    for page_num, image in enumerate(images):
+    for image in images:
         img = np.array(image)
         img_cv = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
 
@@ -356,52 +350,42 @@ def mark(pdf_path, student_path, quiz_path, answer_path):
                 detected_id = barcode.text
                 break
 
-        if detected_id and detected_id != student_id:
-            if student_id:
-                res = process_test(test_pages, results_corners, choice_corners, choice_page, student_id, ans, quiz)
-                student_results[student_id] = res
-                print(f"Finished {student_id}, switching to {detected_id}")
+        if detected_id:
+            student_id, page = detected_id.split("@")
+            tests[student_id][page] = img
 
-            student_id = detected_id
-            test_pages.clear()
-            results_corners.clear()
-            choice_corners.clear()
-            ans = answers[student_id]
-            choice_page.clear()
-            test_page_num = 0
+    student_results = {}
+    aruco_detector = cv2.aruco.ArucoDetector(ARUCO_DICT, PARAMETERS)
+    for student_id in tests:
+        test_pages = []
+        results_corners = []
+        choice_corners = []
+        choice_pages = []
 
-            test_pages.append(img)
+        for page_num, page in sorted(tests[student_id].items()):
+            test_pages.append(page)
+            img_cv = cv2.cvtColor(page, cv2.COLOR_RGB2BGR)
+            corners, ids, rejected = aruco_detector.detectMarkers(img_cv)
 
-        elif student_id:
-            test_pages.append(img)
-            test_page_num += 1
-        else:
-            test_pages.append(img)
+            if ids is None:
+                continue
 
-        aruco_detector = cv2.aruco.ArucoDetector(ARUCO_DICT, PARAMETERS)
-        corners, ids, rejected = aruco_detector.detectMarkers(img_cv)
+            if np.any(np.isin(ids, RESULTS_IDS)):
+                corners_idx = np.where(np.isin(ids.flatten(), RESULTS_IDS))[0]
+                results_corners.append(np.array(corners)[corners_idx].squeeze())
 
-        if ids is None:
-            continue
+            if np.any(np.isin(ids, CHOICE_IDS)):
+                choice_idx = np.where(np.isin(ids.flatten(), CHOICE_IDS))[0]
+                choice_corners.append(np.array(corners)[choice_idx].squeeze())
+                choice_pages.append(int(page_num))
 
-        if np.any(np.isin(ids, RESULTS_IDS)):
-            corners_idx = np.where(np.isin(ids.flatten(), RESULTS_IDS))[0]
-            results_corners.append(np.array(corners)[corners_idx].squeeze())
-
-        if np.any(np.isin(ids, CHOICE_IDS)):
-            choice_idx = np.where(np.isin(ids.flatten(), CHOICE_IDS))[0]
-            choice_corners.append(np.array(corners)[choice_idx].squeeze())
-            choice_page.append(test_page_num)
-
-    if student_id:
-        res = process_test(test_pages, results_corners, choice_corners, choice_page, student_id, ans, quiz)
-        student_results[student_id] = res
-        print(f"Finished final student: {student_id}")
+        result = process_test(test_pages, results_corners, choice_corners, choice_pages, student_id, answers[student_id], quiz)
+        student_results[student_id] = result
 
     json.dump(student_results, open("res/marked_students.json", "w"))
 
 if __name__ == "__main__":
-    pdf_path = "./tmp-honza.novak-annotated.pdf"
+    pdf_path = "quiz-filled.pdf"
     student_path = "students.json"
     quiz_path = "quiz.json"
     answer_path = "quiz_ans.json"

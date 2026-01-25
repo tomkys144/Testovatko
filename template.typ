@@ -11,7 +11,7 @@
             align: (left, center, right),
             text(weight: "bold", size: 12pt)[#student_name],
             block()[],
-            block(height: 2em)[#tiaoma.pdf417(student_username)],
+            block(height: 2em)[#tiaoma.pdf417((student_username + "@" + str(counter(page).get().first() - 1)))],
           )
         ]
       }
@@ -36,7 +36,7 @@
     ],
     align(top + right, block(height: 2em)[
       // Generate QR code encoding the student name
-      #tiaoma.pdf417(student_username)
+      #tiaoma.pdf417(student_username + "@0")
     ]),
   )
   line(length: 100%, stroke: 1pt)
@@ -117,10 +117,11 @@
             align: (left, center, right),
             text(weight: "bold", size: 12pt)[#student_name],
             block()[],
-            block(height: 2em)[#tiaoma.pdf417(student_username)],
+            block(height: 2em)[#tiaoma.pdf417(student_username + "@" + str(counter(page).get().first()))],
           )
         ]
       )
+      str(counter(page).get().first())
       align(center + top)[_Prostor na poznámky._]
     }
   }
