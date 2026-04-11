@@ -1,0 +1,42 @@
+name: Build on Release
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-latest
+            os_name: linux
+            sep: ":"
+          - os: windows-latest
+            os_name: windows
+            sep: ";"
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: prefix-dev/setup-pixi@v0.9.5
+
+      - name: Build with PyInstaller
+        shell: bash
+        run: |
+          # This creates the directory dist/testovatko/
+          pixi run pyinstaller --noconfirm --onedir --add-data "template.typ${{ matrix.sep }}." main.py -n testovatko
+
+      - name: Package into ZIP
+        shell: bash
+        run: |
+          # Go into the dist folder and zip the 'testovatko' directory
+          cd dist
+          zip -r ../testovatko-${{ matrix.os_name }}.zip testovatko
+
+      - name: Upload Release Asset
+        uses: softprops/action-gh-release@v2
+        with:
+          files: testovatko-${{ matrix.os_name }}.zip

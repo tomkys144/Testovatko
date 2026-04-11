@@ -6,6 +6,10 @@ platforms = ["linux-64"]
 version = "0.1.0"
 
 [tasks]
+generate = "python main.py generate"
+mark = "python main.py mark"
+main = "python main.py"
+build = "pyinstaller --noconfirm --onedir --add-data 'template.typ:.' main.py -n testovatko"
 
 [dependencies]
 python = ">=3.14.2,<3.15"
@@ -14,6 +18,7 @@ pixi-pycharm = ">=0.0.10,<0.0.11"
 numpy = ">=2.4.1,<3"
 tesseract = ">=5.5.2,<6"
 pillow = ">=12.1.0,<13"
+pyinstaller = ">=6.19.0,<7"
 
 [pypi-dependencies]
 typst = ">=0.14.7, <0.15"

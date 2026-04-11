@@ -6,6 +6,8 @@ import typst
 import string
 import os
 import glob
+import sys
+import shutil
 
 from pypdf import PdfWriter
 
@@ -143,6 +145,13 @@ def make_quiz(quiz: dict, output_path: str, student: dict, typst_path:str= ""):
     typst.compile(typst_path, output=output_path)
     return answers
 
+def ensure_template_exists():
+    if hasattr(sys, '_MEIPASS'):
+        bundled_template = os.path.join(sys._MEIPASS, 'template.typ')
+
+        if not os.path.exists('template.typ'):
+            shutil.copy(bundled_template, 'template.typ')
+
 def generate(quiz_path: str, student_path: str, output_path: str, answers_path: str):
     generate_aruco_markers()
     quiz = parse_assignment(quiz_path)
@@ -173,4 +182,4 @@ def generate(quiz_path: str, student_path: str, output_path: str, answers_path: 
     json.dump(answers, open(answers_path, 'w+'))
 
 if __name__ == '__main__':
-    generate("quiz.json", "students.json", "quiz.pdf", "quiz_ans.json")
+    generate("quiz1.json", "students1.json", "quiz1.pdf", "quiz_ans1.json")
