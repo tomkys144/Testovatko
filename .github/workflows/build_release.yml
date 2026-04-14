@@ -1,0 +1,55 @@
+name: Build on Release
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-latest
+            os_name: linux
+            sep: ":"
+          - os: windows-latest
+            os_name: windows
+            sep: ";"
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      # Only run this on Linux; Windows uses a different cache path
+      - name: Clean stale rattler cache (Linux)
+        if: runner.os == 'Linux'
+        run: rm -rf /home/runner/.cache/rattler/cache/uv-cache/
+        continue-on-error: true
+
+      - uses: prefix-dev/setup-pixi@v0.9.5
+        with:
+          cache: true
+          pixi-version: v0.61.0
+
+      - name: Build with PyInstaller
+        shell: bash
+        run: |
+          pixi run pyinstaller --noconfirm --onedir \
+            --add-data "template.typ${{ matrix.sep }}." \
+            main.py -n testovatko
+
+      - name: Package into ZIP
+        shell: bash
+        run: |
+          cd dist
+          if [ "${{ matrix.os_name }}" = "windows" ]; then
+            7z a ../testovatko-windows.zip testovatko/
+          else
+            zip -r ../testovatko-linux.zip testovatko/
+          fi
+
+      - name: Upload Release Asset
+        uses: softprops/action-gh-release@v2
+        with:
+          files: testovatko-${{ matrix.os_name }}.zip
