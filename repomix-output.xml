@@ -1,0 +1,1356 @@
+This file is a merged representation of the entire codebase, combined into a single document by Repomix.
+
+<file_summary>
+This section contains a summary of this file.
+
+<purpose>
+This file contains a packed representation of the entire repository's contents.
+It is designed to be easily consumable by AI systems for analysis, code review,
+or other automated processes.
+</purpose>
+
+<file_format>
+The content is organized as follows:
+1. This summary section
+2. Repository information
+3. Directory structure
+4. Repository files (if enabled)
+5. Multiple file entries, each consisting of:
+  - File path as an attribute
+  - Full contents of the file
+</file_format>
+
+<usage_guidelines>
+- This file should be treated as read-only. Any changes should be made to the
+  original repository files, not this packed version.
+- When processing this file, use the file path to distinguish
+  between different files in the repository.
+- Be aware that this file may contain sensitive information. Handle it with
+  the same level of security as you would the original repository.
+</usage_guidelines>
+
+<notes>
+- Some files may have been excluded based on .gitignore rules and Repomix's configuration
+- Binary files are not included in this packed representation. Please refer to the Repository Structure section for a complete list of file paths, including binary files
+- Files matching patterns in .gitignore are excluded
+- Files matching default ignore patterns are excluded
+- Files are sorted by Git change count (files with more changes are at the bottom)
+</notes>
+
+</file_summary>
+
+<directory_structure>
+assets/
+  marker_0.png
+  marker_1.png
+  marker_2.png
+  marker_3.png
+  marker_4.png
+  marker_5.png
+  marker_6.png
+  marker_7.png
+  model_download.sh
+  template.typ
+  text-detection.rten
+  text-recognition.rten
+licenses/
+  LICENSE-typst-as-library
+src/
+  generator/
+    compiler.rs
+    composer.rs
+    renderer.rs
+  marker/
+    detector.rs
+    grader.rs
+    ingestor.rs
+    reporter.rs
+  cli.rs
+  generator.rs
+  main.rs
+  marker.rs
+  models.rs
+  utils.rs
+.gitattributes
+.gitignore
+Cargo.toml
+quiz_ans.json
+</directory_structure>
+
+<files>
+This section contains the contents of the repository's files.
+
+<file path="assets/model_download.sh">
+#!/bin/sh
+
+DETECTION_MODEL="https://ocrs-models.s3-accelerate.amazonaws.com/text-detection.rten"
+RECOGNITION_MODEL="https://ocrs-models.s3-accelerate.amazonaws.com/text-recognition.rten"
+
+curl "$DETECTION_MODEL" -o text-detection.rten
+curl "$RECOGNITION_MODEL" -o text-recognition.rten
+</file>
+
+<file path="licenses/LICENSE-typst-as-library">
+Apache License
+                        Version 2.0, January 2004
+                     http://www.apache.org/licenses/
+
+TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
+
+1. Definitions.
+
+   "License" shall mean the terms and conditions for use, reproduction,
+   and distribution as defined by Sections 1 through 9 of this document.
+
+   "Licensor" shall mean the copyright owner or entity authorized by
+   the copyright owner that is granting the License.
+
+   "Legal Entity" shall mean the union of the acting entity and all
+   other entities that control, are controlled by, or are under common
+   control with that entity. For the purposes of this definition,
+   "control" means (i) the power, direct or indirect, to cause the
+   direction or management of such entity, whether by contract or
+   otherwise, or (ii) ownership of fifty percent (50%) or more of the
+   outstanding shares, or (iii) beneficial ownership of such entity.
+
+   "You" (or "Your") shall mean an individual or Legal Entity
+   exercising permissions granted by this License.
+
+   "Source" form shall mean the preferred form for making modifications,
+   including but not limited to software source code, documentation
+   source, and configuration files.
+
+   "Object" form shall mean any form resulting from mechanical
+   transformation or translation of a Source form, including but
+   not limited to compiled object code, generated documentation,
+   and conversions to other media types.
+
+   "Work" shall mean the work of authorship, whether in Source or
+   Object form, made available under the License, as indicated by a
+   copyright notice that is included in or attached to the work
+   (an example is provided in the Appendix below).
+
+   "Derivative Works" shall mean any work, whether in Source or Object
+   form, that is based on (or derived from) the Work and for which the
+   editorial revisions, annotations, elaborations, or other modifications
+   represent, as a whole, an original work of authorship. For the purposes
+   of this License, Derivative Works shall not include works that remain
+   separable from, or merely link (or bind by name) to the interfaces of,
+   the Work and Derivative Works thereof.
+
+   "Contribution" shall mean any work of authorship, including
+   the original version of the Work and any modifications or additions
+   to that Work or Derivative Works thereof, that is intentionally
+   submitted to Licensor for inclusion in the Work by the copyright owner
+   or by an individual or Legal Entity authorized to submit on behalf of
+   the copyright owner. For the purposes of this definition, "submitted"
+   means any form of electronic, verbal, or written communication sent
+   to the Licensor or its representatives, including but not limited to
+   communication on electronic mailing lists, source code control systems,
+   and issue tracking systems that are managed by, or on behalf of, the
+   Licensor for the purpose of discussing and improving the Work, but
+   excluding communication that is conspicuously marked or otherwise
+   designated in writing by the copyright owner as "Not a Contribution."
+
+   "Contributor" shall mean Licensor and any individual or Legal Entity
+   on behalf of whom a Contribution has been received by Licensor and
+   subsequently incorporated within the Work.
+
+2. Grant of Copyright License. Subject to the terms and conditions of
+   this License, each Contributor hereby grants to You a perpetual,
+   worldwide, non-exclusive, no-charge, royalty-free, irrevocable
+   copyright license to reproduce, prepare Derivative Works of,
+   publicly display, publicly perform, sublicense, and distribute the
+   Work and such Derivative Works in Source or Object form.
+
+3. Grant of Patent License. Subject to the terms and conditions of
+   this License, each Contributor hereby grants to You a perpetual,
+   worldwide, non-exclusive, no-charge, royalty-free, irrevocable
+   (except as stated in this section) patent license to make, have made,
+   use, offer to sell, sell, import, and otherwise transfer the Work,
+   where such license applies only to those patent claims licensable
+   by such Contributor that are necessarily infringed by their
+   Contribution(s) alone or by combination of their Contribution(s)
+   with the Work to which such Contribution(s) was submitted. If You
+   institute patent litigation against any entity (including a
+   cross-claim or counterclaim in a lawsuit) alleging that the Work
+   or a Contribution incorporated within the Work constitutes direct
+   or contributory patent infringement, then any patent licenses
+   granted to You under this License for that Work shall terminate
+   as of the date such litigation is filed.
+
+4. Redistribution. You may reproduce and distribute copies of the
+   Work or Derivative Works thereof in any medium, with or without
+   modifications, and in Source or Object form, provided that You
+   meet the following conditions:
+
+   (a) You must give any other recipients of the Work or
+       Derivative Works a copy of this License; and
+
+   (b) You must cause any modified files to carry prominent notices
+       stating that You changed the files; and
+
+   (c) You must retain, in the Source form of any Derivative Works
+       that You distribute, all copyright, patent, trademark, and
+       attribution notices from the Source form of the Work,
+       excluding those notices that do not pertain to any part of
+       the Derivative Works; and
+
+   (d) If the Work includes a "NOTICE" text file as part of its
+       distribution, then any Derivative Works that You distribute must
+       include a readable copy of the attribution notices contained
+       within such NOTICE file, excluding those notices that do not
+       pertain to any part of the Derivative Works, in at least one
+       of the following places: within a NOTICE text file distributed
+       as part of the Derivative Works; within the Source form or
+       documentation, if provided along with the Derivative Works; or,
+       within a display generated by the Derivative Works, if and
+       wherever such third-party notices normally appear. The contents
+       of the NOTICE file are for informational purposes only and
+       do not modify the License. You may add Your own attribution
+       notices within Derivative Works that You distribute, alongside
+       or as an addendum to the NOTICE text from the Work, provided
+       that such additional attribution notices cannot be construed
+       as modifying the License.
+
+   You may add Your own copyright statement to Your modifications and
+   may provide additional or different license terms and conditions
+   for use, reproduction, or distribution of Your modifications, or
+   for any such Derivative Works as a whole, provided Your use,
+   reproduction, and distribution of the Work otherwise complies with
+   the conditions stated in this License.
+
+5. Submission of Contributions. Unless You explicitly state otherwise,
+   any Contribution intentionally submitted for inclusion in the Work
+   by You to the Licensor shall be under the terms and conditions of
+   this License, without any additional terms or conditions.
+   Notwithstanding the above, nothing herein shall supersede or modify
+   the terms of any separate license agreement you may have executed
+   with Licensor regarding such Contributions.
+
+6. Trademarks. This License does not grant permission to use the trade
+   names, trademarks, service marks, or product names of the Licensor,
+   except as required for reasonable and customary use in describing the
+   origin of the Work and reproducing the content of the NOTICE file.
+
+7. Disclaimer of Warranty. Unless required by applicable law or
+   agreed to in writing, Licensor provides the Work (and each
+   Contributor provides its Contributions) on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+   implied, including, without limitation, any warranties or conditions
+   of TITLE, NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A
+   PARTICULAR PURPOSE. You are solely responsible for determining the
+   appropriateness of using or redistributing the Work and assume any
+   risks associated with Your exercise of permissions under this License.
+
+8. Limitation of Liability. In no event and under no legal theory,
+   whether in tort (including negligence), contract, or otherwise,
+   unless required by applicable law (such as deliberate and grossly
+   negligent acts) or agreed to in writing, shall any Contributor be
+   liable to You for damages, including any direct, indirect, special,
+   incidental, or consequential damages of any character arising as a
+   result of this License or out of the use or inability to use the
+   Work (including but not limited to damages for loss of goodwill,
+   work stoppage, computer failure or malfunction, or any and all
+   other commercial damages or losses), even if such Contributor
+   has been advised of the possibility of such damages.
+
+9. Accepting Warranty or Additional Liability. While redistributing
+   the Work or Derivative Works thereof, You may choose to offer,
+   and charge a fee for, acceptance of support, warranty, indemnity,
+   or other liability obligations and/or rights consistent with this
+   License. However, in accepting such obligations, You may act only
+   on Your own behalf and on Your sole responsibility, not on behalf
+   of any other Contributor, and only if You agree to indemnify,
+   defend, and hold each Contributor harmless for any liability
+   incurred by, or claims asserted against, such Contributor by reason
+   of your accepting any such warranty or additional liability.
+
+END OF TERMS AND CONDITIONS
+</file>
+
+<file path="src/generator/composer.rs">
+use crate::models::{Quiz, Section, Student};
+use anyhow::Result;
+use rand::rng;
+use rand::seq::SliceRandom;
+use std::collections::{BTreeMap, HashMap};
+
+const TYPST_TEMPLATE: &str = include_str!("../../assets/template.typ");
+
+pub fn make_quiz(quiz: &Quiz, student: &Student) -> Result<(String, BTreeMap<usize, Vec<String>>)> {
+    let mut quiz_markup: String = TYPST_TEMPLATE.to_string();
+    quiz_markup.push_str("#set heading(numbering: \"1.1.\")\n\n");
+    quiz_markup.push_str(&format!(
+        "#show: doc => exam_setup(\"{}\", \"{}\", doc)\n\n",
+        student.name, student.username
+    ));
+    quiz_markup.push_str(&format!(
+        "#assignment_header(\"{}\", \"{}\", \"{}\", \"{}\", \"{}\", \"{}\")\n",
+        quiz.title,
+        quiz.group.clone().unwrap_or_default(),
+        quiz.class,
+        quiz.date,
+        student.name,
+        student.username
+    ));
+    quiz_markup.push_str(&make_points_summary(quiz, Some(0))?);
+
+    let mut answers = BTreeMap::new();
+    for (section_num, section) in quiz.sections.iter().enumerate() {
+        let (section_markup, section_answers) = make_section(section, section_num as u32 + 1)?;
+        quiz_markup.push_str(&section_markup);
+        answers.insert(section_num, section_answers);
+    }
+    quiz_markup.push_str(&format!(
+        "\n#finish_exam(\"{}\", \"{}\")\n",
+        student.name, student.username
+    ));
+
+    Ok((quiz_markup, answers))
+}
+
+fn make_points_summary(quiz: &Quiz, start_marker_id: Option<u32>) -> Result<String> {
+    let points: Vec<u32> = quiz
+        .sections
+        .iter()
+        .map(|section| section.questions.iter().map(|q| q.points).sum())
+        .collect();
+
+    let total_points: u32 = points.iter().sum();
+    let num_sections = quiz.sections.len();
+
+    let mut points_markup = String::from("#table(\n");
+
+    points_markup.push_str(&format!(
+        "\tcolumns: ({}),\n",
+        vec!["5em"; num_sections + 1].join(", ")
+    ));
+    points_markup.push_str("\talign: center,\n");
+    points_markup.push_str("\tinset: 8pt,\n");
+
+    let mut headers: Vec<String> = (1..=num_sections)
+        .map(|i| format!("text(weight: \"bold\")[{}]", i))
+        .collect();
+    headers.push(String::from("$Sigma$"));
+    points_markup.push_str(&format!("\t{},\n", headers.join(", ")));
+
+    let mut points_row: Vec<String> = points
+        .iter()
+        .map(|&pts| format!("text(weight: \"bold\")[{}]", pts))
+        .collect();
+    points_row.push(format!("text(weight: \"bold\")[{}]", total_points));
+    points_markup.push_str(&format!("\t{},\n", points_row.join(", ")));
+
+    let empty_row = vec!["v(1.5em)"; num_sections + 1].join(", ");
+    points_markup.push_str(&format!("\t{},\n)\n", empty_row));
+
+    let table_markup = format!(
+        "#add_markers_around_table(start_id: {})[\n{}\n]\n",
+        start_marker_id.unwrap_or(0),
+        points_markup
+    );
+
+    Ok(table_markup)
+}
+
+fn make_section(section: &Section, section_num: u32) -> Result<(String, Vec<String>)> {
+    let mut section_markup: String = format!("= {}\n\n", section.title);
+    let mut answers = Vec::new();
+    let mut gnr = rng();
+
+    match section.section_type.as_str() {
+        "open" => {
+            for (q_idx, question) in section.questions.iter().enumerate() {
+                section_markup.push_str(&format!(
+                    "#open_question(points: {}, lines: {}, qnum: \"{}.{}\")[{}]\n\n",
+                    question.points,
+                    question.lines.unwrap_or(5),
+                    section_num,
+                    q_idx + 1,
+                    question.question
+                ));
+            }
+        }
+        "multiple_choice" => {
+            for (q_idx, question) in section.questions.iter().enumerate() {
+                let mut options = question.options.clone().unwrap_or_default();
+                options.shuffle(&mut gnr);
+
+                let mut opt_strings = Vec::new();
+
+                for (opt_dx, option) in options.iter().enumerate() {
+                    opt_strings.push(format!("[{}]", option.text));
+
+                    if option.is_correct {
+                        let label = (b'A' + opt_dx as u8) as char;
+                        answers.push(label.to_string());
+                    }
+                }
+
+                section_markup.push_str(&format!(
+                    "#multiple_choice_question(points: {}, qnum: \"{}.{}\", options: ({}))[{}]\n\n",
+                    question.points,
+                    section_num,
+                    q_idx + 1,
+                    opt_strings.join(", "),
+                    question.question
+                ));
+            }
+        }
+        _ => {}
+    }
+
+    Ok((section_markup, answers))
+}
+</file>
+
+<file path="src/generator/renderer.rs">
+use anyhow::{Context, Result};
+use lopdf::{Document as PdfDocument, Object, ObjectId};
+use std::collections::BTreeMap;
+
+pub fn render_final(input_paths: &[String], output_path: &str) -> Result<()> {
+    let mut documents = Vec::new();
+    for path in input_paths {
+        documents.push(PdfDocument::load(path).with_context(|| format!("Loading {}", path))?);
+    }
+
+    let mut max_id = 1;
+    let mut documents_pages = BTreeMap::new();
+    let mut documents_objects = BTreeMap::new();
+    let mut merged_doc = PdfDocument::with_version("1.5");
+
+    for mut doc in documents {
+        doc.renumber_objects_with(max_id);
+        max_id = doc.max_id + 1;
+
+        documents_pages.extend(
+            doc.get_pages()
+                .into_iter()
+                .map(|(_, object_id)| (object_id, doc.get_object(object_id).unwrap().to_owned())),
+        );
+        documents_objects.extend(doc.objects);
+    }
+
+    let mut catalog_object: Option<(ObjectId, Object)> = None;
+    let mut pages_object: Option<(ObjectId, Object)> = None;
+
+    for (object_id, object) in documents_objects.iter() {
+        match object.type_name().unwrap_or(b"") {
+            b"Catalog" => {
+                catalog_object = Some((
+                    if let Some((id, _)) = catalog_object { id } else { *object_id },
+                    object.clone(),
+                ));
+            }
+            b"Pages" => {
+                if let Ok(dictionary) = object.as_dict() {
+                    let mut dictionary = dictionary.clone();
+                    if let Some((_, ref object)) = pages_object {
+                        if let Ok(old_dictionary) = object.as_dict() {
+                            dictionary.extend(old_dictionary);
+                        }
+                    }
+                    pages_object = Some((
+                        if let Some((id, _)) = pages_object { id } else { *object_id },
+                        Object::Dictionary(dictionary),
+                    ));
+                }
+            }
+            b"Page" | b"Outlines" | b"Outline" => {}
+            _ => {
+                merged_doc.objects.insert(*object_id, object.clone());
+            }
+        }
+    }
+
+    let catalog_object = catalog_object.context("Catalog root not found")?;
+    let pages_object = pages_object.context("Pages root not found")?;
+
+    for (object_id, object) in documents_pages.iter() {
+        if let Ok(dictionary) = object.as_dict() {
+            let mut dictionary = dictionary.clone();
+            dictionary.set("Parent", pages_object.0);
+            merged_doc.objects.insert(*object_id, Object::Dictionary(dictionary));
+        }
+    }
+
+    if let Ok(dictionary) = pages_object.1.as_dict() {
+        let mut dictionary = dictionary.clone();
+        dictionary.set("Count", documents_pages.len() as u32);
+        dictionary.set(
+            "Kids",
+            documents_pages.into_iter().map(|(object_id, _)| Object::Reference(object_id)).collect::<Vec<_>>(),
+        );
+        merged_doc.objects.insert(pages_object.0, Object::Dictionary(dictionary));
+    }
+
+    if let Ok(dictionary) = catalog_object.1.as_dict() {
+        let mut dictionary = dictionary.clone();
+        dictionary.set("Pages", pages_object.0);
+        dictionary.remove(b"Outlines");
+        merged_doc.objects.insert(catalog_object.0, Object::Dictionary(dictionary));
+    }
+
+    merged_doc.trailer.set("Root", catalog_object.0);
+    merged_doc.max_id = merged_doc.objects.len() as u32;
+
+    merged_doc.renumber_objects();
+    merged_doc.compress();
+    merged_doc.save(output_path).context("Failed to save printable PDF")?;
+
+    Ok(())
+}
+</file>
+
+<file path="src/marker/detector.rs">
+use anyhow::Result;
+use aruco_rs::ImageBuffer;
+use aruco_rs::core::detector::Detector;
+use aruco_rs::core::dictionary::{DICTIONARY_ARUCO, Dictionary};
+use aruco_rs::cv::scalar::ScalarCV;
+use image::{DynamicImage, GrayImage};
+use imageproc::contrast;
+
+const RESULTS_IDS: [u32; 4] = [0, 1, 2, 3];
+const CHOICES_IDS: [u32; 4] = [4, 5, 6, 7];
+
+pub fn process_page(img: &DynamicImage) -> Result<()> {
+    let gray_img = img.to_luma8();
+    let otsu_val = contrast::otsu_level(&gray_img);
+    let thr_img = contrast::threshold(&gray_img, otsu_val, contrast::ThresholdType::Binary);
+
+    Ok(())
+}
+
+fn detect_uruco(img: &GrayImage) -> Result<()> {
+    let dict = Dictionary::new(&DICTIONARY_ARUCO);
+    let mut detector = Detector::new(&dict, ScalarCV);
+    let buffer = ImageBuffer {
+        data: img.as_raw(),
+        width: img.width(),
+        height: img.height(),
+    };
+    let markers = detector.detect(&buffer);
+
+    for marker in markers {
+        println!(
+            "Found ArUco ID {}, Corners: {:?}",
+            marker.id, marker.corners
+        );
+    }
+    Ok(())
+}
+</file>
+
+<file path="src/marker/grader.rs">
+
+</file>
+
+<file path="src/marker/ingestor.rs">
+use anyhow::Result;
+use image::DynamicImage;
+use pdfium::{PdfiumDocument, PdfiumRenderConfig};
+use std::collections::BTreeMap;
+
+pub fn load_quiz(pdf_path: &str) -> Result<BTreeMap<String, BTreeMap<u32, DynamicImage>>> {
+    let doc = PdfiumDocument::new_from_path(pdf_path, None).unwrap();
+    let conf = PdfiumRenderConfig::new().with_height(1080);
+
+    let mut tests: BTreeMap<String, BTreeMap<u32, DynamicImage>> = BTreeMap::new();
+
+    for page in doc.pages() {
+        let img = page
+            .unwrap()
+            .render(&conf)
+            .unwrap()
+            .as_rgba8_image()
+            .unwrap();
+
+        let barcode_res =
+            rxing::helpers::detect_in_image(img.clone(), Some(rxing::BarcodeFormat::PDF_417));
+
+        if let Ok(barcode) = barcode_res {
+            let raw_text = barcode.getText();
+
+            if let Some((username, page_num_str)) = raw_text.split_once('@') {
+                let page_num = page_num_str.parse::<u32>().unwrap();
+                tests
+                    .entry(username.to_string())
+                    .or_default()
+                    .insert(page_num, img);
+            }
+        }
+    }
+
+    Ok(tests)
+}
+</file>
+
+<file path="src/marker/reporter.rs">
+
+</file>
+
+<file path="src/marker.rs">
+mod ingestor;
+mod detector;
+mod grader;
+mod reporter;
+
+use crate::models::{Quiz, Student};
+use anyhow::{Context, Result};
+use std::fs;
+
+pub fn mark(
+    pdf_path: &str,
+    quiz_path: &str,
+    students_path: &str,
+    answers_path: &str,
+) -> Result<()> {
+    let quiz_str = fs::read_to_string(quiz_path).context("Reading quiz file")?;
+    let quiz: Quiz = serde_json::from_str(&quiz_str).context("Deserializing quiz file")?;
+
+    let students_str = fs::read_to_string(students_path).context("Reading students file")?;
+    let students: Vec<Student> =
+        serde_json::from_str(&students_str).context("Deserializing students file")?;
+
+    let tests = ingestor::load_quiz(pdf_path)?;
+
+    for (username, test) in tests.iter() {
+        println!("Processing {}", username);
+
+    }
+
+    Ok(())
+}
+</file>
+
+<file path="assets/template.typ">
+#import "@preview/tiaoma:0.3.0"
+
+#let exam_setup(student_name, student_username, body) = {
+  show raw: it => {
+    if it.block {
+      block(fill: luma(245), inset: 10pt, radius: 4pt, width: 100%, text(fill: black, it.text))
+    } else {
+      box(fill: luma(245), inset: (x: 3pt, y: 0pt), outset: (y: 3pt), radius: 2pt, text(fill: black, it.text))
+    }
+  }
+
+  set page(
+    margin: (top: 3cm),
+    header: context {
+      if counter(page).get().first() > 1 {
+        block(stroke: (bottom: 2pt), width: 100%, inset: (bottom: 5pt))[
+          #grid(
+            columns: (1fr, auto, 1fr),
+            align: (left, center, right),
+            text(weight: "bold", size: 12pt)[#student_name],
+            block()[],
+            block(height: 2em)[#tiaoma.pdf417((student_username + "@" + str(counter(page).get().first() - 1)))],
+          )
+        ]
+      }
+    }
+  )
+  body
+}
+
+#let assignment_header(title, group, clazz, date, student_name, student_username) = {
+  // Top Grid: Left side (Info), Right side (Student + QR)
+  grid(
+    columns: (1fr, auto),
+    gutter: 1em,
+    [
+      #text(weight: "bold", size: 1.5em)[#title] \
+      #v(0.5em)
+
+      #text(weight: "bold")[Jméno:] #student_name\
+      #text(weight: "bold")[Třída:] #clazz | #text(weight: "bold")[Skupina:] #group \
+      #text(weight: "bold")[Datum:] #date \
+      #text(weight: "bold")[Podpis:]
+    ],
+    align(top + right, block(height: 2em)[
+      // Generate QR code encoding the student name
+      #tiaoma.pdf417(student_username + "@0")
+    ]),
+  )
+  line(length: 100%, stroke: 1pt)
+  v(1cm)
+}
+
+#let open_question(points: 0, lines: 1, qnum: "1", body) = {
+  block(breakable: false, width: 100%, {
+    grid(
+      columns: (1fr, auto),
+      gutter: 1em,
+      [
+        #text(weight: "bold")[Otázka #qnum:]
+        #body
+        // Multiply em by the integer 'lines'
+        #v(2em * lines)
+      ],
+      align(top, text(weight: "bold")[
+        (#points bodů)
+      ]),
+    )
+  })
+}
+
+#let multiple_choice_question(points: 0, qnum: "1", options: (), body) = {
+  block(breakable: false, width: 100%, {
+    grid(
+      columns: (1fr, auto),
+      gutter: 1em,
+      [
+        // Question Text
+        #text(weight: "bold")[Otázka #qnum:]
+        #body
+        #v(0.5em)
+
+        #set enum(numbering: "a)")
+        #enum(..options)
+      ],
+      align(top, text(weight: "bold")[
+        (#points bodů)
+      ]),
+    )
+  })
+}
+
+#let add_markers_around_table(start_id: 0, body) = {
+  let m_size = 0.8cm
+  align(center, grid(
+    columns: (1cm, auto, 1cm),
+
+    // Read directly from disk, no sys.inputs!
+    image("marker_" + str(start_id) + ".png", width: m_size),
+    grid.cell()[],
+    image("marker_" + str(start_id + 1) + ".png", width: m_size),
+
+    grid.cell()[],
+    body,
+    grid.cell()[],
+
+    image("marker_" + str(start_id + 2) + ".png", width: m_size),
+    grid.cell()[],
+    image("marker_" + str(start_id + 3) + ".png", width: m_size),
+  ))
+}
+
+#let finish_exam(student_name, student_username) = {
+  // If we are on an odd page, add one empty page to make the total even
+  context {
+    if calc.odd(counter(page).get().first()) {
+      pagebreak()
+      // Optional: Add text to indicate it's intentionally blank
+      set page(
+        margin: (top: 3cm),
+        header: block(stroke: (bottom: 2pt), width: 100%, inset: (bottom: 5pt))[
+          #grid(
+            columns: (1fr, auto, 1fr),
+            align: (left, center, right),
+            text(weight: "bold", size: 12pt)[#student_name],
+            block()[],
+            block(height: 2em)[#tiaoma.pdf417(student_username + "@" + str(counter(page).get().first()))],
+          )
+        ]
+      )
+      str(counter(page).get().first())
+      align(center + top)[_Prostor na poznámky._]
+    }
+  }
+}
+</file>
+
+<file path="src/generator/compiler.rs">
+// ============================================================================
+// Acknowledgement:
+// The core logic of this module is heavily based on/copied from the
+// `typst-as-library` repository by Timo Bachmann (tfachmann).
+//
+// Source: https://github.com/tfachmann/typst-as-library
+// License: Apache License 2.0
+//
+// Copyright (c) 2024 Timo Bachmann
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+// ============================================================================
+
+use std::collections::HashMap;
+use std::io::Read;
+use std::path::PathBuf;
+use std::sync::{Arc, Mutex};
+
+use typst::diag::{eco_format, FileError, FileResult, PackageError, PackageResult};
+use typst::foundations::{Bytes, Datetime};
+use typst::syntax::package::PackageSpec;
+use typst::syntax::{FileId, Source};
+use typst::text::{Font, FontBook};
+use typst::utils::LazyHash;
+use typst::{Library, LibraryExt};
+use typst_kit::fonts::{FontSearcher, FontSlot};
+
+/// Main interface that determines the environment for Typst.
+pub struct TypstWrapperWorld {
+    /// Root path to which files will be resolved.
+    root: PathBuf,
+
+    /// The content of a source.
+    source: Source,
+
+    /// The standard library.
+    library: LazyHash<Library>,
+
+    /// Metadata about all known fonts.
+    book: LazyHash<FontBook>,
+
+    /// Metadata about all known fonts.
+    fonts: Vec<FontSlot>,
+
+    /// Map of all known files.
+    files: Arc<Mutex<HashMap<FileId, FileEntry>>>,
+
+    /// Cache directory (e.g. where packages are downloaded to).
+    cache_directory: PathBuf,
+
+    /// http agent to download packages.
+    http: ureq::Agent,
+
+    /// Datetime.
+    time: time::OffsetDateTime,
+}
+
+impl TypstWrapperWorld {
+    pub fn new(root: String, source: String) -> Self {
+        let root = PathBuf::from(root);
+        let fonts = FontSearcher::new().include_system_fonts(true).search();
+
+        Self {
+            library: LazyHash::new(Library::default()),
+            book: LazyHash::new(fonts.book),
+            root,
+            fonts: fonts.fonts,
+            source: Source::detached(source),
+            time: time::OffsetDateTime::now_utc(),
+            cache_directory: std::env::var_os("CACHE_DIRECTORY")
+                .map(|os_path| os_path.into())
+                .unwrap_or(std::env::temp_dir()),
+            http: ureq::Agent::new_with_defaults(),
+            files: Arc::new(Mutex::new(HashMap::new())),
+        }
+    }
+}
+
+/// A File that will be stored in the HashMap.
+#[derive(Clone, Debug)]
+struct FileEntry {
+    bytes: Bytes,
+    source: Option<Source>,
+}
+
+impl FileEntry {
+    fn new(bytes: Vec<u8>, source: Option<Source>) -> Self {
+        Self {
+            bytes: Bytes::new(bytes),
+            source,
+        }
+    }
+
+    fn source(&mut self, id: FileId) -> FileResult<Source> {
+        let source = if let Some(source) = &self.source {
+            source
+        } else {
+            let contents = std::str::from_utf8(&self.bytes).map_err(|_| FileError::InvalidUtf8)?;
+            let contents = contents.trim_start_matches('\u{feff}');
+            let source = Source::new(id, contents.into());
+            self.source.insert(source)
+        };
+        Ok(source.clone())
+    }
+}
+
+impl TypstWrapperWorld {
+    /// Helper to handle file requests.
+    ///
+    /// Requests will be either in packages or a local file.
+    fn file(&self, id: FileId) -> FileResult<FileEntry> {
+        let mut files = self.files.lock().map_err(|_| FileError::AccessDenied)?;
+        if let Some(entry) = files.get(&id) {
+            return Ok(entry.clone());
+        }
+        let path = if let Some(package) = id.package() {
+            // Fetching file from package
+            let package_dir = self.download_package(package)?;
+            id.vpath().resolve(&package_dir)
+        } else {
+            // Fetching file from disk
+            id.vpath().resolve(&self.root)
+        }
+        .ok_or(FileError::AccessDenied)?;
+
+        let content = std::fs::read(&path).map_err(|error| FileError::from_io(error, &path))?;
+        Ok(files
+            .entry(id)
+            .or_insert(FileEntry::new(content, None))
+            .clone())
+    }
+
+    /// Downloads the package and returns the system path of the unpacked package.
+    fn download_package(&self, package: &PackageSpec) -> PackageResult<PathBuf> {
+        let package_subdir = format!("{}/{}/{}", package.namespace, package.name, package.version);
+        let path = self.cache_directory.join(package_subdir);
+
+        if path.exists() {
+            return Ok(path);
+        }
+
+        eprintln!("downloading {package}");
+        let url = format!(
+            "https://packages.typst.org/{}/{}-{}.tar.gz",
+            package.namespace, package.name, package.version,
+        );
+
+        let response = retry(|| {
+            let response = self
+                .http
+                .get(&url)
+                .call()
+                .map_err(|error| eco_format!("{error}"))?;
+
+            let status = response.status();
+            if !http_successful(status.as_u16()) {
+                return Err(eco_format!(
+                    "response returned unsuccessful status code {status}",
+                ));
+            }
+
+            Ok(response)
+        })
+        .map_err(|error| PackageError::NetworkFailed(Some(error)))?;
+
+        let mut compressed_archive = Vec::new();
+        response
+            .into_body()
+            .into_reader()
+            .read_to_end(&mut compressed_archive)
+            .map_err(|error| PackageError::NetworkFailed(Some(eco_format!("{error}"))))?;
+        let raw_archive = zune_inflate::DeflateDecoder::new(&compressed_archive)
+            .decode_gzip()
+            .map_err(|error| PackageError::MalformedArchive(Some(eco_format!("{error}"))))?;
+        let mut archive = tar::Archive::new(raw_archive.as_slice());
+        archive.unpack(&path).map_err(|error| {
+            _ = std::fs::remove_dir_all(&path);
+            PackageError::MalformedArchive(Some(eco_format!("{error}")))
+        })?;
+
+        Ok(path)
+    }
+}
+
+/// This is the interface we have to implement such that `typst` can compile it.
+///
+/// I have tried to keep it as minimal as possible
+impl typst::World for TypstWrapperWorld {
+    /// Standard library.
+    fn library(&self) -> &LazyHash<Library> {
+        &self.library
+    }
+
+    /// Metadata about all known Books.
+    fn book(&self) -> &LazyHash<FontBook> {
+        &self.book
+    }
+
+    /// Accessing the main source file.
+    fn main(&self) -> FileId {
+        self.source.id()
+    }
+
+    /// Accessing a specified source file (based on `FileId`).
+    fn source(&self, id: FileId) -> FileResult<Source> {
+        if id == self.source.id() {
+            Ok(self.source.clone())
+        } else {
+            self.file(id)?.source(id)
+        }
+    }
+
+    /// Accessing a specified file (non-file).
+    fn file(&self, id: FileId) -> FileResult<Bytes> {
+        self.file(id).map(|file| file.bytes.clone())
+    }
+
+    /// Accessing a specified font per index of font book.
+    fn font(&self, id: usize) -> Option<Font> {
+        self.fonts[id].get()
+    }
+
+    /// Get the current date.
+    ///
+    /// Optionally, an offset in hours is given.
+    fn today(&self, offset: Option<i64>) -> Option<Datetime> {
+        let offset = offset.unwrap_or(0);
+        let offset = time::UtcOffset::from_hms(offset.try_into().ok()?, 0, 0).ok()?;
+        let time = self.time.checked_to_offset(offset)?;
+        Some(Datetime::Date(time.date()))
+    }
+}
+
+fn retry<T, E>(mut f: impl FnMut() -> Result<T, E>) -> Result<T, E> {
+    if let Ok(ok) = f() {
+        Ok(ok)
+    } else {
+        f()
+    }
+}
+
+fn http_successful(status: u16) -> bool {
+    // 2XX
+    status / 100 == 2
+}
+</file>
+
+<file path="src/cli.rs">
+use clap::{Parser, Subcommand, ValueEnum};
+
+#[derive(Parser)]
+#[command(author, version, about)]
+pub struct Cli {
+    #[command(subcommand)]
+    pub command: Commands,
+}
+
+#[derive(Subcommand, Clone)]
+pub enum Commands {
+    /// Generate PDF tests for students.
+    Generate {
+        #[arg(long, default_value = "quiz.json")]
+        quiz: String,
+
+        #[arg(long, default_value = "students.json")]
+        students: String,
+
+        #[arg(long, default_value = "quiz.pdf")]
+        output: String,
+
+        #[arg(long, default_value = "quiz_ans.json")]
+        answers: String,
+    },
+    /// Mark scanned tests.
+    Mark {
+        #[arg(long, default_value = "quiz-filled.pdf")]
+        pdf: String,
+
+        #[arg(long, default_value = "students.json")]
+        students: String,
+
+        #[arg(long, default_value = "quiz.json")]
+        quiz: String,
+
+        #[arg(long, default_value = "quiz_ans.json")]
+        answers: String,
+    },
+    /// Utility scripts to generate configuration files.
+    Setup {
+        #[arg(value_enum)]
+        mode: SetupMode,
+    },
+}
+
+#[derive(clap::ValueEnum, Clone)]
+pub enum SetupMode {
+    Empty,
+    Interactive,
+}
+</file>
+
+<file path="src/generator.rs">
+mod compiler;
+mod composer;
+mod renderer;
+
+use compiler::TypstWrapperWorld;
+use composer::make_quiz;
+use renderer::render_final;
+
+use crate::models::{Quiz, Student};
+use anyhow::{Context, Result};
+use std::collections::{BTreeMap};
+use std::fs;
+
+const TYPST_TEMPLATE: &str = include_str!("../assets/template.typ");
+const ARUCO_MARKERS: [&[u8]; 8] = [
+    include_bytes!("../assets/marker_0.png"),
+    include_bytes!("../assets/marker_1.png"),
+    include_bytes!("../assets/marker_2.png"),
+    include_bytes!("../assets/marker_3.png"),
+    include_bytes!("../assets/marker_4.png"),
+    include_bytes!("../assets/marker_5.png"),
+    include_bytes!("../assets/marker_6.png"),
+    include_bytes!("../assets/marker_7.png"),
+];
+
+pub fn generate(
+    quiz_path: &str,
+    students_path: &str,
+    output_path: &str,
+    answers_path: &str,
+) -> Result<()> {
+    let quiz_str = fs::read_to_string(quiz_path).context("Reading quiz file")?;
+    let quiz: Quiz = serde_json::from_str(&quiz_str).context("Deserializing quiz file")?;
+
+    let students_str = fs::read_to_string(students_path).context("Reading students file")?;
+    let students: Vec<Student> =
+        serde_json::from_str(&students_str).context("Deserializing students file")?;
+
+    // Deploy markers
+    for (i, &image_bytes) in ARUCO_MARKERS.iter().enumerate() {
+        fs::write(format!("marker_{}.png", i), image_bytes)?;
+    }
+
+    let mut master_answers: BTreeMap<String, BTreeMap<usize, Vec<String>>> = BTreeMap::new();
+    let mut generated_pdfs: Vec<String> = Vec::new();
+
+    let current_dir = std::env::current_dir()?.to_string_lossy().to_string();
+
+    for student in &students {
+        let tmp_pdf = format!("tmp-{}.pdf", student.username);
+
+        let (quiz_markup, answers) = make_quiz(&quiz, student)?;
+        master_answers.insert(student.username.clone(), answers);
+
+        let world = TypstWrapperWorld::new(current_dir.clone(), quiz_markup);
+
+        let document = typst::compile(&world)
+            .output
+            .map_err(|e| anyhow::anyhow!("Typst Compilation Error: {:?}", e))?;
+
+        let options = Default::default();
+        let pdf = typst_pdf::pdf(&document, &options).expect("Error exporting PDF");
+
+        fs::write(&tmp_pdf, pdf).expect("Error writing PDF.");
+        generated_pdfs.push(tmp_pdf);
+    }
+
+    render_final(&generated_pdfs, output_path)?;
+
+    // Clean up
+    for pdf in generated_pdfs {
+        let _ = fs::remove_file(pdf);
+    }
+    for i in 0..8 {
+        let _ = fs::remove_file(format!("marker_{}.png", i));
+    }
+
+    let json_file = fs::File::create(answers_path).context("Failed to create JSON file")?;
+    serde_json::to_writer_pretty(json_file, &master_answers)
+        .context("Failed to write answers to JSON")?;
+
+    Ok(())
+}
+</file>
+
+<file path="src/main.rs">
+use anyhow::Result;
+use clap::Parser;
+
+mod cli;
+mod generator;
+mod marker;
+mod models;
+mod utils;
+
+use cli::{Cli, Commands, SetupMode};
+
+fn main() -> Result<()> {
+    // Parse the command line arguments
+    let cli = Cli::parse();
+
+    // Match against the provided subcommand
+    match &cli.command {
+        Commands::Generate {
+            quiz,
+            students,
+            output,
+            answers,
+        } => {
+            println!("Starting test generation...");
+            println!(
+                "Quiz: {}, Students: {}, Output: {}, Answers: {}",
+                quiz, students, output, answers
+            );
+            generator::generate(quiz, students, output, answers)?;
+            println!("Generation completed successfully.");
+        }
+        Commands::Mark {
+            pdf,
+            students,
+            quiz,
+            answers,
+        } => {
+            println!("Starting test marking...");
+            println!("PDF: {}, Students: {}, Quiz: {}", pdf, students, quiz);
+            marker::mark(pdf, students, quiz, answers)?;
+            println!("Marking completed successfully.");
+        }
+        Commands::Setup { mode } => match mode {
+            SetupMode::Empty => {
+                println!("Creating empty templates...");
+            }
+            SetupMode::Interactive => {
+                println!("Starting interactive setup...");
+            }
+        },
+    }
+
+    Ok(())
+}
+</file>
+
+<file path="src/models.rs">
+use serde::{Deserialize, Serialize};
+
+#[derive(Serialize, Deserialize, Debug)]
+pub struct Student {
+    pub name: String,
+    pub username: String,
+}
+
+#[derive(Serialize, Deserialize, Debug)]
+pub struct Quiz {
+    pub title: String,
+    pub class: String,
+    pub group: Option<String>,
+    pub date: String,
+    pub sections: Vec<Section>,
+}
+
+#[derive(Serialize, Deserialize, Debug)]
+pub struct Section {
+    pub title: String,
+    #[serde(rename = "type")]
+    pub section_type: String,
+    pub description: String,
+    pub questions: Vec<Question>,
+}
+
+#[derive(Serialize, Deserialize, Debug)]
+pub struct Question {
+    pub question: String,
+    pub points: u32,
+    pub lines: Option<u32>,
+    pub options: Option<Vec<QuestOption>>,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
+pub struct QuestOption {
+    pub text: String,
+    pub is_correct: bool,
+}
+</file>
+
+<file path="src/utils.rs">
+use serde::{Serialize, Deserialize};
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct Student {
+    pub name: String,
+    pub username: String,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct OptionDef {
+    pub text: String,
+    pub is_correct: bool,
+}
+</file>
+
+<file path=".gitattributes">
+# SCM syntax highlighting & preventing 3-way merges
+pixi.lock merge=binary linguist-language=YAML linguist-generated=true -diff
+</file>
+
+<file path=".gitignore">
+/target
+quiz.json
+students.json
+**/*.pdf
+</file>
+
+<file path="Cargo.toml">
+[package]
+name = "testovatko"
+version = "0.2.0"
+edition = "2024"
+license = "GPL-3.0-or-later"
+description = "Automatic test generator and grader using Typst and OCR."
+repository = "https://github.com/tomkys144/Testovatko"
+rust-version = "1.94.0"
+
+[dependencies]
+clap = { version = "4.6.0", features = ["derive"] }
+serde = { version = "1.0.228", features = ["derive"] }
+serde_json = "1.0.149"
+anyhow = "1.0.102"
+rand = "0.10.1"
+typst = "0.14.2"
+typst-pdf = "0.14.2"
+lopdf = "0.40.0"
+ureq = "3.3.0"
+time = "0.3.47"
+zune-inflate = "0.2.54"
+tar = "0.4.45"
+typst-kit = "0.14.2"
+rxing = { git = "https://github.com/rxing-core/rxing", rev = "047966f15d97c012b0412bac56d9709f5e9f86de" }
+imageproc = "0.26.1"
+nalgebra = "0.34.2"
+ocrs = "0.12.2"
+pdfium = "0.10.3"
+image = "^0.25.9"
+aruco-rs = "0.1.0"
+</file>
+
+<file path="quiz_ans.json">
+{
+  "franta.dolejsi": {
+    "0": [],
+    "1": [
+      "B",
+      "C",
+      "A",
+      "D",
+      "D",
+      "A",
+      "C",
+      "A"
+    ]
+  },
+  "honza.novak": {
+    "0": [],
+    "1": [
+      "B",
+      "B",
+      "B",
+      "A",
+      "E",
+      "C",
+      "D",
+      "C"
+    ]
+  }
+}
+</file>
+
+</files>

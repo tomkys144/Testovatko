@@ -28,27 +28,35 @@
   body
 }
 
-#let assignment_header(title, group, clazz, date, student_name, student_username) = {
-  // Top Grid: Left side (Info), Right side (Student + QR)
-  grid(
-    columns: (1fr, auto),
-    gutter: 1em,
-    [
-      #text(weight: "bold", size: 1.5em)[#title] \
-      #v(0.5em)
+#let assignment_header(title, group, class, date, student_name, student_username) = {
+  place(top + right)[
+    #block(height: 2em)[#tiaoma.pdf417(student_username + "@0")]
+  ]
 
-      #text(weight: "bold")[Jméno:] #student_name\
-      #text(weight: "bold")[Třída:] #clazz | #text(weight: "bold")[Skupina:] #group \
-      #text(weight: "bold")[Datum:] #date \
-      #text(weight: "bold")[Podpis:]
-    ],
-    align(top + right, block(height: 2em)[
-      // Generate QR code encoding the student name
-      #tiaoma.pdf417(student_username + "@0")
-    ]),
-  )
-  line(length: 100%, stroke: 1pt)
+  v(2em)
+
+  align(center)[
+    #text(weight: "bold", size: 1.5em)[#title] \
+    #v(.5em)
+    #text(weight: "semibold", size: 1.2em)[Třída: #class #h(2em) Skupina: #group] \
+    #v(2em)
+  ]
+
+  block([
+    #set text(size: 1.1em)
+
+    #text(weight: "bold")[Jméno:]
+    #box(width: 80%, stroke: none, outset: (bottom: 3pt))[#student_name] \
+    #v(1em)
+    #text(weight: "bold")[Datum:]
+    #box(width: 40%, stroke: none, outset: (bottom: 3pt))[#date] \
+    #v(1em)
+    #text(weight: "bold")[Podpis:]
+    #box(width: 20%, stroke: (bottom: 1pt), outset: (bottom: 3pt))[] \
+  ])
   v(1cm)
+
+
 }
 
 #let open_question(points: 0, lines: 1, qnum: "1", body) = {
@@ -59,7 +67,6 @@
       [
         #text(weight: "bold")[Otázka #qnum:]
         #body
-        // Multiply em by the integer 'lines'
         #v(2em * lines)
       ],
       align(top, text(weight: "bold")[
@@ -75,7 +82,6 @@
       columns: (1fr, auto),
       gutter: 1em,
       [
-        // Question Text
         #text(weight: "bold")[Otázka #qnum:]
         #body
         #v(0.5em)
@@ -94,8 +100,6 @@
   let m_size = 0.8cm
   align(center, grid(
     columns: (1cm, auto, 1cm),
-
-    // Read directly from disk, no sys.inputs!
     image("marker_" + str(start_id) + ".png", width: m_size),
     grid.cell()[],
     image("marker_" + str(start_id + 1) + ".png", width: m_size),
@@ -110,26 +114,10 @@
   ))
 }
 
-#let finish_exam(student_name, student_username) = {
-  // If we are on an odd page, add one empty page to make the total even
-  context {
-    if calc.odd(counter(page).get().first()) {
-      pagebreak()
-      // Optional: Add text to indicate it's intentionally blank
-      set page(
-        margin: (top: 3cm),
-        header: block(stroke: (bottom: 2pt), width: 100%, inset: (bottom: 5pt))[
-          #grid(
-            columns: (1fr, auto, 1fr),
-            align: (left, center, right),
-            text(weight: "bold", size: 12pt)[#student_name],
-            block()[],
-            block(height: 2em)[#tiaoma.pdf417(student_username + "@" + str(counter(page).get().first()))],
-          )
-        ]
-      )
-      str(counter(page).get().first())
-      align(center + top)[_Prostor na poznámky._]
-    }
-  }
-}
+#let finish_exam(student_name, student_username) = context [
+  #let p = counter(page).get().first()
+  #if calc.odd(p) [
+    pagebreak()
+    align(center + top)[_Prostor na poznámky._]
+  ]
+]

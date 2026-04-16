@@ -1,14 +1,14 @@
 mod compiler;
-mod markup;
-mod pdf;
+mod composer;
+mod renderer;
 
-use markup::make_quiz;
-use pdf::merge_pdfs;
 use compiler::TypstWrapperWorld;
+use composer::make_quiz;
+use renderer::render_final;
 
 use crate::models::{Quiz, Student};
 use anyhow::{Context, Result};
-use std::collections::HashMap;
+use std::collections::{BTreeMap};
 use std::fs;
 
 const TYPST_TEMPLATE: &str = include_str!("../assets/template.typ");
@@ -41,7 +41,7 @@ pub fn generate(
         fs::write(format!("marker_{}.png", i), image_bytes)?;
     }
 
-    let mut master_answers: HashMap<String, HashMap<usize, Vec<String>>> = HashMap::new();
+    let mut master_answers: BTreeMap<String, BTreeMap<usize, Vec<String>>> = BTreeMap::new();
     let mut generated_pdfs: Vec<String> = Vec::new();
 
     let current_dir = std::env::current_dir()?.to_string_lossy().to_string();
@@ -65,7 +65,7 @@ pub fn generate(
         generated_pdfs.push(tmp_pdf);
     }
 
-    merge_pdfs(&generated_pdfs, output_path)?;
+    render_final(&generated_pdfs, output_path)?;
 
     // Clean up
     for pdf in generated_pdfs {

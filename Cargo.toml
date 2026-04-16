@@ -2,6 +2,10 @@
 name = "testovatko"
 version = "0.2.0"
 edition = "2024"
+license = "GPL-3.0-or-later"
+description = "Automatic test generator and grader using Typst and OCR."
+repository = "https://github.com/tomkys144/Testovatko"
+rust-version = "1.94.0"
 
 [dependencies]
 clap = { version = "4.6.0", features = ["derive"] }
@@ -17,3 +21,10 @@ time = "0.3.47"
 zune-inflate = "0.2.54"
 tar = "0.4.45"
 typst-kit = "0.14.2"
+rxing = { git = "https://github.com/rxing-core/rxing", rev = "047966f15d97c012b0412bac56d9709f5e9f86de" }
+imageproc = "0.26.1"
+nalgebra = "0.34.2"
+ocrs = "0.12.2"
+pdfium = "0.10.3"
+image = "^0.25.9"
+aruco-rs = "0.1.0"
