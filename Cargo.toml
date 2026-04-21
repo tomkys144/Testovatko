@@ -28,3 +28,5 @@ ocrs = "0.12.2"
 pdfium = "0.10.3"
 image = "^0.25.9"
 aruco-rs = "0.1.0"
+poppler = { version = "0.6.0", features = ["render"] }
+aruco3 = { git = "https://github.com/JosephCatrambone/aruco3", version = "0.1.0" }

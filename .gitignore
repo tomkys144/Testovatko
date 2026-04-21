@@ -1,4 +1,3 @@
 /target
-quiz.json
-students.json
 **/*.pdf
+**/*.json

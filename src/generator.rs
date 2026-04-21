@@ -67,7 +67,6 @@ pub fn generate(
 
     render_final(&generated_pdfs, output_path)?;
 
-    // Clean up
     for pdf in generated_pdfs {
         let _ = fs::remove_file(pdf);
     }

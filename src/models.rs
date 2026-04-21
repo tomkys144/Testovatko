@@ -24,7 +24,7 @@ pub struct Section {
     pub questions: Vec<Question>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct Question {
     pub question: String,
     pub points: u32,
@@ -36,4 +36,14 @@ pub struct Question {
 pub struct QuestOption {
     pub text: String,
     pub is_correct: bool,
+}
+
+#[derive(Debug, Clone, Copy)]
+pub struct TableLocation {
+    /// 0 for Results, 1 for Choices
+    pub table_type: i32,
+    pub x: u32,
+    pub y: u32,
+    pub width: u32,
+    pub height: u32,
 }

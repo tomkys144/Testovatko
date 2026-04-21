@@ -1,5 +1,7 @@
 #!/bin/sh
 
+echo "Please note: These models are licensed under CC BY-SA 4.0 by the ocrs-models project."
+
 DETECTION_MODEL="https://ocrs-models.s3-accelerate.amazonaws.com/text-detection.rten"
 RECOGNITION_MODEL="https://ocrs-models.s3-accelerate.amazonaws.com/text-recognition.rten"
 

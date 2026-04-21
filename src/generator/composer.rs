@@ -102,7 +102,10 @@ fn make_section(section: &Section, section_num: u32) -> Result<(String, Vec<Stri
             }
         }
         "multiple_choice" => {
-            for (q_idx, question) in section.questions.iter().enumerate() {
+            let mut questions = section.questions.clone();
+            questions.shuffle(&mut gnr);
+
+            for (q_idx, question) in questions.iter().enumerate() {
                 let mut options = question.options.clone().unwrap_or_default();
                 options.shuffle(&mut gnr);
 
@@ -126,9 +129,51 @@ fn make_section(section: &Section, section_num: u32) -> Result<(String, Vec<Stri
                     question.question
                 ));
             }
+
+            section_markup.push_str(&make_answer_grid(section, section_num));
         }
         _ => {}
     }
 
     Ok((section_markup, answers))
+}
+
+fn make_answer_grid(section: &Section, section_number: u32) -> String {
+    let num_questions = section.questions.len();
+
+    // Find the maximum number of options in this section to determine the number of rows
+    let num_answers = section
+        .questions
+        .iter()
+        .map(|q| q.options.as_ref().map_or(0, |opts| opts.len()))
+        .max()
+        .unwrap_or(0);
+
+    let mut tbl = String::from("#table(\n");
+
+    tbl.push_str(&format!(
+        "\tcolumns: (2.5em, {}),\n",
+        vec!["2.5em"; num_questions].join(", ")
+    ));
+    tbl.push_str("\trows: 2.5em,\n");
+
+    let mut headers = vec![String::from("table.cell()[]")];
+    for j in 0..num_questions {
+        headers.push(format!(
+            "text(weight: \"bold\", size: 1.8em)[{}.{}]",
+            section_number,
+            j + 1
+        ));
+    }
+    tbl.push_str(&format!("\t{},\n", headers.join(", ")));
+
+    for i in 0..num_answers {
+        let letter = (b'A' + i as u8) as char;
+        let mut row = vec![format!("text(weight: \"bold\", size: 1.8em)[{}]", letter)];
+        row.extend(vec![String::from("table.cell()[]"); num_questions]);
+        tbl.push_str(&format!("\t{},\n", row.join(", ")));
+    }
+    tbl.push_str(")");
+
+    format!("#add_markers_around_table(start_id: 4)[\n{}\n]\n", tbl)
 }

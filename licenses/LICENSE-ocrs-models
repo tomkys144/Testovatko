@@ -1,0 +1,10 @@
+The machine learning models used for text detection and recognition
+(text-detection.rten and text-recognition.rten) are provided by the
+ocrs-models project.
+
+Creator: Robert Knight
+Project URL: https://github.com/robertknight/ocrs-models
+License: Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)
+
+A copy of the CC BY-SA 4.0 license can be found at:
+https://creativecommons.org/licenses/by-sa/4.0/legalcode
